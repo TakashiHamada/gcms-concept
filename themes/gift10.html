@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#ffffff" />
-    <meta name="description" content="GCMS — Vercel × GIFT TEN INDUSTRY theme" />
-    <title>GCMS — Gift10 theme</title>
+    <meta name="description" content="GCMS — Google Calendar Management System のコンセプト" />
+    <title>GCMS — Google Calendar Management System</title>
 
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='white'/%3E%3Cpolygon points='32,18 48,46 16,46' fill='%23DB1717'/%3E%3C/svg%3E" />
 
@@ -34,6 +34,19 @@
       pre code.hljs { background: #fafafa !important; padding: 1.25rem !important; border: 1px solid #eaeaea; border-radius: 6px; font-size: 13px; line-height: 1.65; }
       h1, h2, h3 { letter-spacing: -0.025em; }
       a.txt-accent:hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; text-decoration-thickness: 2px; }
+
+      /* Diagram */
+      .diagram pre {
+        background: #fafafa;
+        border: 1px solid #eaeaea;
+        border-radius: 6px;
+        padding: 1.25rem;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 12px;
+        line-height: 1.6;
+        color: #111;
+        overflow-x: auto;
+      }
     </style>
   </head>
 
@@ -61,8 +74,10 @@
         </a>
         <nav class="hidden gap-5 text-sm text-neutral-600 sm:flex">
           <a class="txt-accent hover:text-black" href="#overview">概要</a>
+          <a class="txt-accent hover:text-black" href="#concept">設計コンセプト</a>
           <a class="txt-accent hover:text-black" href="#architecture">構成</a>
-          <a class="txt-accent hover:text-black" href="#workflow">ワークフロー</a>
+          <a class="txt-accent hover:text-black" href="#records">記録対象</a>
+          <a class="txt-accent hover:text-black" href="#use-cases">活用</a>
         </nav>
       </div>
     </header>
@@ -74,9 +89,12 @@
         <h1 class="mt-3 text-4xl font-extrabold tracking-tight sm:text-6xl">
           GCMS<span class="accent">.</span>
         </h1>
+        <p class="mt-2 mono text-xs uppercase tracking-widest text-neutral-500">Google Calendar Management System</p>
         <p class="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-700">
-          Code-first concept management. 設定もコンテンツもすべてリポジトリ上のコードとして表現し、
-          軽量なランタイムで動かすための、最小限のシステム設計。
+          できるだけ多くの業務情報を Google カレンダーに記録し、
+          そこを唯一の<strong class="font-semibold text-black">データ基盤</strong>として運用する社内システム。
+          会議・日報・有給など、テキストにできる業務データを 1 つのカレンダーに集約し、
+          後段のあらゆるツールから自由にアクセスできる状態を作ります。
         </p>
         <div class="mt-7 flex flex-wrap gap-3">
           <a href="#overview" class="inline-flex items-center gap-2 rounded-md accent-bg px-4 py-2 text-sm font-medium text-white hover:bg-[var(--accent-hover)]">
@@ -94,23 +112,29 @@
           <span class="mono mr-2 text-xs accent">01</span>概要
         </h2>
         <p class="mt-4 leading-relaxed text-neutral-700">
-          GCMS は、属人化しがちな「コンテンツや設定の管理」を、
-          レビュー可能で再現性のあるコードとして表現することを目指します。
-          既存 CMS が抱える運用の重さを <span class="ic">git</span> ベースのワークフローで解消します。
+          GCMS は、業務データを <span class="ic">Google カレンダー</span> 上に
+          テキストイベントとして蓄積し、それを「会社の動きが時系列で読める唯一の基盤」として運用するアーキテクチャです。
+          一次情報（カレンダー・タスク等）は機微情報を含むため、
+          ローカル LLM で要約・フィルタしてから「会社カレンダー」へ集約します。
+          一度集約されたデータは、Python や AI ツール、いずれは会計ソフトなど、
+          あらゆる業務ツールから読み出して活用できます。
         </p>
 
         <dl class="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-[#eaeaea] bg-[#eaeaea] sm:grid-cols-3">
           <div class="bg-white p-5">
-            <dt class="mono text-[11px] uppercase tracking-wider accent">Problem</dt>
-            <dd class="mt-2 text-sm font-medium">既存 CMS の複雑さ・属人性</dd>
+            <dt class="mono text-[11px] uppercase tracking-wider accent">Database</dt>
+            <dd class="mt-2 text-sm font-medium">Google カレンダー</dd>
+            <dd class="mt-1 text-xs text-neutral-500">時系列・全社員アクセス・標準 API</dd>
           </div>
           <div class="bg-white p-5">
-            <dt class="mono text-[11px] uppercase tracking-wider accent">Solution</dt>
-            <dd class="mt-2 text-sm font-medium">コードベースで一元管理</dd>
+            <dt class="mono text-[11px] uppercase tracking-wider accent">Pipeline</dt>
+            <dd class="mt-2 text-sm font-medium">GAS + cron + ローカル LLM</dd>
+            <dd class="mt-1 text-xs text-neutral-500">一次情報を要約・フィルタして集約</dd>
           </div>
           <div class="bg-white p-5">
-            <dt class="mono text-[11px] uppercase tracking-wider accent">Value</dt>
-            <dd class="mt-2 text-sm font-medium">再現性・透明性・速度</dd>
+            <dt class="mono text-[11px] uppercase tracking-wider accent">Tools</dt>
+            <dd class="mt-2 text-sm font-medium">Python / AI ツール</dd>
+            <dd class="mt-1 text-xs text-neutral-500">基盤を読んで成果物を生成</dd>
           </div>
         </dl>
       </section>
@@ -118,28 +142,37 @@
       <!-- Concept -->
       <section id="concept" class="border-b border-[#eaeaea] py-12">
         <h2 class="text-2xl font-bold tracking-tight">
-          <span class="mono mr-2 text-xs accent">02</span>設計思想
+          <span class="mono mr-2 text-xs accent">02</span>設計コンセプト
         </h2>
         <ol class="mt-6 divide-y divide-[#eaeaea] border-y border-[#eaeaea]">
           <li class="grid grid-cols-[3rem_1fr] gap-4 py-5">
             <span class="mono text-sm font-semibold accent">01</span>
             <div>
-              <h3 class="font-semibold">Code as Source of Truth</h3>
-              <p class="mt-1 text-sm leading-relaxed text-neutral-600">あらゆる定義をコードで表現し、レビュー・再現可能にします。</p>
+              <h3 class="font-semibold">Calendar as Database</h3>
+              <p class="mt-1 text-sm leading-relaxed text-neutral-600">
+                すべての業務データを Google カレンダーに集約する。
+                時系列性・検索性・全社員アクセスが標準で備わり、追加のインフラを必要としない。
+              </p>
             </div>
           </li>
           <li class="grid grid-cols-[3rem_1fr] gap-4 py-5">
             <span class="mono text-sm font-semibold accent">02</span>
             <div>
-              <h3 class="font-semibold">Minimal Runtime</h3>
-              <p class="mt-1 text-sm leading-relaxed text-neutral-600">実行時依存を最小化し、長期に陳腐化しない構成を目指します。</p>
+              <h3 class="font-semibold">Filtered by LLM</h3>
+              <p class="mt-1 text-sm leading-relaxed text-neutral-600">
+                一次情報（個人カレンダー・タスク・議事録）には記録に残したくないものが混ざる。
+                ローカル LLM で要約・整形・除去してから「会社カレンダー」に書き込む。
+              </p>
             </div>
           </li>
           <li class="grid grid-cols-[3rem_1fr] gap-4 py-5">
             <span class="mono text-sm font-semibold accent">03</span>
             <div>
-              <h3 class="font-semibold">Composable</h3>
-              <p class="mt-1 text-sm leading-relaxed text-neutral-600">小さな単位で構成し、置換・追加を容易にします。</p>
+              <h3 class="font-semibold">集約と活用の分離</h3>
+              <p class="mt-1 text-sm leading-relaxed text-neutral-600">
+                Stage 1（集約）と Stage 2（活用）を疎結合に保つ。
+                活用ツールは増え続けるため、データ基盤は「読みやすい・書きやすい」状態に保ち続ける。
+              </p>
             </div>
           </li>
         </ol>
@@ -150,70 +183,183 @@
         <h2 class="text-2xl font-bold tracking-tight">
           <span class="mono mr-2 text-xs accent">03</span>構成
         </h2>
-        <p class="mt-3 text-neutral-700">プロジェクトのレイアウトとルート設定の例です。</p>
+        <p class="mt-3 text-neutral-700">
+          システムは <strong class="font-semibold text-black">2 段階のフロー</strong> から成ります。
+          Stage 1 で一次情報を集約し、Stage 2 で集約済みデータを活用します。
+          書き込みは必ず単一窓口（<span class="ic">api-input</span>）を経由します。
+        </p>
 
-        <div class="mt-6">
-          <div class="mb-1 mono text-xs accent">project layout</div>
-<pre><code class="language-plaintext">gcms/
-├─ schema/         # コンテンツのスキーマ定義
-├─ content/        # 実体データ (YAML / Markdown / JSON)
-├─ pipelines/      # ビルド・変換・検証
-├─ adapters/       # 出力先 (Web / API / Static)
-└─ gcms.config.ts  # ルート設定</code></pre>
+        <div class="diagram mt-6">
+          <div class="mb-1 mono text-xs accent">data flow</div>
+<pre>  ┌────────────────────┐
+  │  一次情報 (Source) │
+  │  ・Google Calendar │
+  │  ・Google Tasks    │
+  │  ・(将来) 会計データ│
+  └─────────┬──────────┘
+            │
+            ▼  Stage 1 — 集約
+  ┌────────────────────┐
+  │  GAS / cron / LLM  │
+  │  ・要約・フィルタ  │
+  │  ・スキーマ検証    │
+  │  ・冪等な upsert   │
+  └─────────┬──────────┘
+            │
+            ▼
+  ╔════════════════════╗
+  ║  データ基盤        ║
+  ║  Google カレンダー ║
+  ║  (会社イベント)    ║
+  ╚═════════╤══════════╝
+            │
+            ▼  Stage 2 — 活用
+  ┌────────────────────┐
+  │  Python / AI ツール│
+  │  ・日報レポート    │
+  │  ・有給数の管理    │
+  │  ・期間サマリ      │
+  │  ・(将来) 決算書   │
+  └────────────────────┘</pre>
         </div>
 
-        <div class="mt-6">
-          <div class="mb-1 mono text-xs accent">gcms.config.ts</div>
-<pre><code class="language-typescript">import { defineConfig } from "gcms";
-
-export default defineConfig({
-  schema: "./schema",
-  content: "./content",
-  output: {
-    web: { dir: "./dist", baseUrl: "/" },
-    api: { dir: "./dist/api" },
-  },
-  pipelines: ["validate", "transform", "emit"],
-});</code></pre>
+        <h3 class="mt-10 text-base font-semibold tracking-tight">主要コンポーネント</h3>
+        <div class="mt-3 overflow-hidden rounded-lg border border-[#eaeaea]">
+          <table class="w-full text-sm">
+            <thead class="bg-[#fafafa] text-left mono text-[11px] uppercase tracking-wider text-neutral-500">
+              <tr>
+                <th class="px-4 py-2.5 font-medium">Name</th>
+                <th class="px-4 py-2.5 font-medium">Stage</th>
+                <th class="px-4 py-2.5 font-medium">Role</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#eaeaea]">
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] accent">api-input</td>
+                <td class="px-4 py-3 text-neutral-600">Stage 1</td>
+                <td class="px-4 py-3">単一の書き込み窓口（GAS）。スキーマ検証・サイズ制限・冪等性を集約。</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] accent">leave-tracker</td>
+                <td class="px-4 py-3 text-neutral-600">Stage 1</td>
+                <td class="px-4 py-3">10 分 cron。各社員 primary の有給/有休を会社カレンダーに集計。</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] accent">daily-report</td>
+                <td class="px-4 py-3 text-neutral-600">Stage 1</td>
+                <td class="px-4 py-3">毎朝 06:00 JST。タスクとカレンダーから前日分の日報を生成。</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] accent">ingest-meetings</td>
+                <td class="px-4 py-3 text-neutral-600">Stage 1</td>
+                <td class="px-4 py-3">30 分 cron。Drive 上の Meet 議事録 Doc を取り込み・圧縮。</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] text-neutral-500">(将来のツール群)</td>
+                <td class="px-4 py-3 text-neutral-600">Stage 2</td>
+                <td class="px-4 py-3 text-neutral-600">基盤を読んで成果物を生成する各種 Python / AI ツール。</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <!-- Workflow -->
-      <section id="workflow" class="border-b border-[#eaeaea] py-12">
+      <!-- Records -->
+      <section id="records" class="border-b border-[#eaeaea] py-12">
         <h2 class="text-2xl font-bold tracking-tight">
-          <span class="mono mr-2 text-xs accent">04</span>ワークフロー
+          <span class="mono mr-2 text-xs accent">04</span>いま記録されているもの
         </h2>
-        <p class="mt-3 text-neutral-700">CLI を使った一般的な操作フローです。</p>
-<pre class="mt-6"><code class="language-bash"># 1. 初期化
-$ npx gcms init my-project
+        <p class="mt-3 text-neutral-700">
+          現在、3 系統のデータが Stage 1 のパイプライン経由で会社カレンダーに集約されています。
+        </p>
 
-# 2. スキーマ定義
-$ gcms schema add Article
+        <ul class="mt-6 space-y-4">
+          <li class="rounded-lg border border-[#eaeaea] p-5">
+            <div class="flex items-baseline justify-between gap-3">
+              <h3 class="font-semibold">議事録</h3>
+              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">ingest-meetings · 30 min</span>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
+              Gemini Meet で生成された議事録 Doc を Drive から取り込み、
+              <span class="ic">＜概要＞ / ＜次のステップ＞ / ＜詳細＞</span> の 3 ブロックに整形して 1 議事録 = 1 イベントに集約。
+              プライベートな雑談や個人情報は LLM 段階でフィルタされます。
+            </p>
+          </li>
+          <li class="rounded-lg border border-[#eaeaea] p-5">
+            <div class="flex items-baseline justify-between gap-3">
+              <h3 class="font-semibold">日報</h3>
+              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">daily-report · 06:00 JST</span>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
+              前日の Google Tasks 完了分と各社員のカレンダーから、ローカル LLM が 1 セクションずつ生成。
+              <span class="ic">[日報] YYYY-MM-DD</span> という終日イベント 1 つに、会社全体と社員別の見出しで並べて集約。
+              休んでいる社員は LLM をスキップし、<span class="ic">- お休み (n)</span> と決定論的に記録します。
+            </p>
+          </li>
+          <li class="rounded-lg border border-[#eaeaea] p-5">
+            <div class="flex items-baseline justify-between gap-3">
+              <h3 class="font-semibold">有給休暇</h3>
+              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">leave-tracker · 10 min</span>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
+              各社員が自分のカレンダーに書いた「有給」「有休」イベントを 10 分おきに集計し、
+              年度起算月から累計 (N) を毎回ゼロから振り直します。残数管理の単一情報源として機能します。
+            </p>
+          </li>
+        </ul>
+      </section>
 
-# 3. コンテンツ作成
-$ gcms content new Article hello-world
+      <!-- Use cases -->
+      <section id="use-cases" class="border-b border-[#eaeaea] py-12">
+        <h2 class="text-2xl font-bold tracking-tight">
+          <span class="mono mr-2 text-xs accent">05</span>想定される活用
+        </h2>
+        <p class="mt-3 text-neutral-700">
+          活用ツール（Stage 2）は必要になったときに仕様化していく方針です。
+          現時点で見えている候補は以下のとおり。
+        </p>
 
-# 4. ビルド & プレビュー
-$ gcms build && gcms serve</code></pre>
+        <ul class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <li class="rounded-lg border border-[#eaeaea] p-4">
+            <h3 class="text-sm font-semibold">補助金業務の日報作成</h3>
+            <p class="mt-1 text-xs leading-relaxed text-neutral-600">集約済み日報から所定フォーマットへ整形・出力。</p>
+          </li>
+          <li class="rounded-lg border border-[#eaeaea] p-4">
+            <h3 class="text-sm font-semibold">残り有給数の管理</h3>
+            <p class="mt-1 text-xs leading-relaxed text-neutral-600">leave-tracker が振り直した累計から残数を即時参照。</p>
+          </li>
+          <li class="rounded-lg border border-[#eaeaea] p-4">
+            <h3 class="text-sm font-semibold">期間ごとの振り返り</h3>
+            <p class="mt-1 text-xs leading-relaxed text-neutral-600">月次・四半期で「やってきたこと」をまとめる。</p>
+          </li>
+          <li class="rounded-lg border border-[#eaeaea] p-4">
+            <h3 class="text-sm font-semibold">決算書の作成（将来）</h3>
+            <p class="mt-1 text-xs leading-relaxed text-neutral-600">会計データがカレンダーに乗れば、自動生成も視野。</p>
+          </li>
+        </ul>
       </section>
 
       <!-- Roadmap -->
       <section id="roadmap" class="py-12">
         <h2 class="text-2xl font-bold tracking-tight">
-          <span class="mono mr-2 text-xs accent">05</span>ロードマップ
+          <span class="mono mr-2 text-xs accent">06</span>ロードマップ
         </h2>
         <ul class="mt-6 divide-y divide-[#eaeaea] border-y border-[#eaeaea]">
           <li class="flex items-baseline gap-4 py-4">
             <span class="mono inline-flex w-12 shrink-0 items-center justify-center accent-bg px-1.5 py-0.5 text-[11px] font-semibold text-white">v0.1</span>
-            <span class="text-sm">コンセプト整理・本ドキュメントの公開</span>
+            <span class="text-sm">議事録・日報・有給の 3 系統を Stage 1 として稼働中（現在地）</span>
           </li>
           <li class="flex items-baseline gap-4 py-4">
             <span class="mono inline-flex w-12 shrink-0 items-center justify-center border border-[#eaeaea] px-1.5 py-0.5 text-[11px] font-semibold text-neutral-500">v0.2</span>
-            <span class="text-sm">スキーマ定義 DSL のプロトタイプ</span>
+            <span class="text-sm">会計データを会社カレンダーへ記録するパイプラインの追加</span>
           </li>
           <li class="flex items-baseline gap-4 py-4">
             <span class="mono inline-flex w-12 shrink-0 items-center justify-center border border-[#eaeaea] px-1.5 py-0.5 text-[11px] font-semibold text-neutral-500">v0.3</span>
-            <span class="text-sm">CLI と最小ビルドパイプライン</span>
+            <span class="text-sm">AI が外部情報（締切・公募・期日など）を自動でカレンダーに登録</span>
+          </li>
+          <li class="flex items-baseline gap-4 py-4">
+            <span class="mono inline-flex w-12 shrink-0 items-center justify-center border border-[#eaeaea] px-1.5 py-0.5 text-[11px] font-semibold text-neutral-500">v0.4+</span>
+            <span class="text-sm">Stage 2 ツール群の整備（補助金日報・決算書 など、必要に応じて随時）</span>
           </li>
         </ul>
       </section>
