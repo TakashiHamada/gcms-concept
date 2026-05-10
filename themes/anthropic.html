@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#faf9f5" />
+    <meta name="description" content="GCMS — Anthropic-inspired theme" />
+    <title>GCMS — Anthropic theme</title>
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23faf9f5'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%23c96442'/%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/atom-one-light.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.min.js"></script>
+
+    <style>
+      html { scroll-behavior: smooth; scroll-padding-top: 5rem; -webkit-text-size-adjust: 100%; }
+      body { font-family: "Inter", system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; color: #2a2724; background: #faf9f5; }
+      .serif { font-family: "Crimson Pro", "Hiragino Mincho ProN", "Noto Serif JP", "YuMincho", serif; }
+      .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .ic { font-family: "JetBrains Mono", monospace; background: #f1ece0; border: 1px solid #e7e2d6; padding: 1px 6px; border-radius: 4px; font-size: 0.85em; color: #3d362f; }
+      pre { background: transparent !important; }
+      pre code.hljs { background: #fbfaf6 !important; border: 1px solid #e7e2d6; padding: 1.1rem !important; border-radius: 8px; font-size: 13px; line-height: 1.7; }
+      .accent { color: #c96442; }
+      .accent-bg { background: #c96442; }
+      .accent-soft { background: #fae9df; }
+      .rule { background: linear-gradient(90deg, transparent, #d8d0bf, transparent); height: 1px; }
+      .drop-cap::first-letter { font-family: "Crimson Pro", serif; font-weight: 600; font-size: 3em; line-height: 0.85; float: left; padding: 4px 8px 0 0; color: #c96442; }
+    </style>
+  </head>
+
+  <body class="antialiased">
+    <!-- Theme switcher -->
+    <div class="border-b border-[#e7e2d6] bg-[#f4f0e6]">
+      <div class="mx-auto flex max-w-3xl items-center gap-1 overflow-x-auto px-4 py-2 text-xs sm:px-6">
+        <a href="../index.html" class="shrink-0 rounded px-2 py-1 text-[#6b6258] hover:text-[#2a2724]">← All themes</a>
+        <span class="mx-1 h-4 w-px bg-[#d8d0bf]"></span>
+        <a href="./stripe.html" class="shrink-0 rounded px-2 py-1 text-[#6b6258] hover:text-[#2a2724]">Stripe</a>
+        <a href="./vercel.html" class="shrink-0 rounded px-2 py-1 text-[#6b6258] hover:text-[#2a2724]">Vercel</a>
+        <a href="./linear.html" class="shrink-0 rounded px-2 py-1 text-[#6b6258] hover:text-[#2a2724]">Linear</a>
+        <a href="./anthropic.html" class="shrink-0 rounded bg-[#fae9df] px-2 py-1 font-semibold accent">Anthropic</a>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 border-b border-[#e7e2d6] bg-[#faf9f5]/90 backdrop-blur">
+      <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4 sm:px-6">
+        <a href="#" class="flex items-center gap-2.5">
+          <span class="grid h-7 w-7 place-items-center rounded-full accent-bg text-xs font-bold text-white mono">G</span>
+          <span class="serif text-base font-semibold tracking-tight">GCMS</span>
+        </a>
+        <nav class="hidden gap-6 text-sm text-[#5a5a5a] sm:flex">
+          <a class="hover:text-[#2a2724]" href="#overview">概要</a>
+          <a class="hover:text-[#2a2724]" href="#concept">設計思想</a>
+          <a class="hover:text-[#2a2724]" href="#architecture">構成</a>
+          <a class="hover:text-[#2a2724]" href="#workflow">ワークフロー</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-4 sm:px-6">
+      <!-- Hero -->
+      <article class="py-14 sm:py-20">
+        <p class="mono text-[11px] uppercase tracking-[0.22em] accent">Concept · v0.1</p>
+        <h1 class="serif mt-4 text-5xl font-semibold leading-[1.05] tracking-tight text-[#1a1816] sm:text-6xl">
+          A calmer way to manage<br />your concepts.
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[#5a5247]">
+          GCMS は、急ぎ足で増えていくコンテンツや設定を、落ち着いて読めるコードとして残すための小さなシステム。
+          書く・読む・残す、その全てを丁寧に。
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#overview" class="inline-flex items-center gap-2 rounded-full accent-bg px-5 py-2 text-sm font-semibold text-white hover:bg-[#b85735]">読み始める →</a>
+          <a href="#architecture" class="inline-flex items-center gap-2 rounded-full border border-[#d8d0bf] px-5 py-2 text-sm font-semibold text-[#2a2724] hover:bg-white">構成を見る</a>
+        </div>
+      </article>
+
+      <div class="rule"></div>
+
+      <!-- Overview -->
+      <section id="overview" class="py-12 sm:py-16">
+        <p class="mono text-[11px] uppercase tracking-[0.22em] accent">Overview</p>
+        <h2 class="serif mt-2 text-3xl font-semibold text-[#1a1816]">概要</h2>
+        <p class="drop-cap mt-5 text-[17px] leading-[1.85] text-[#3d362f]">
+          GCMS は、属人化しがちな「コンテンツや設定の管理」を、レビュー可能で再現性のあるコードとして表現することを目指します。既存 CMS が抱える運用の重さを、<span class="ic">git</span> ベースのワークフローで解消します。
+        </p>
+
+        <dl class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="rounded-lg border border-[#e7e2d6] bg-white p-5">
+            <dt class="mono text-[11px] uppercase tracking-wider text-[#8c8377]">Problem</dt>
+            <dd class="serif mt-2 text-base text-[#1a1816]">既存 CMS の複雑さ・属人性</dd>
+          </div>
+          <div class="rounded-lg border border-[#e7e2d6] bg-white p-5">
+            <dt class="mono text-[11px] uppercase tracking-wider text-[#8c8377]">Solution</dt>
+            <dd class="serif mt-2 text-base text-[#1a1816]">コードベースで一元管理</dd>
+          </div>
+          <div class="rounded-lg border border-[#e7e2d6] bg-white p-5">
+            <dt class="mono text-[11px] uppercase tracking-wider text-[#8c8377]">Value</dt>
+            <dd class="serif mt-2 text-base text-[#1a1816]">再現性・透明性・速度</dd>
+          </div>
+        </dl>
+      </section>
+
+      <div class="rule"></div>
+
+      <!-- Concept -->
+      <section id="concept" class="py-12 sm:py-16">
+        <p class="mono text-[11px] uppercase tracking-[0.22em] accent">Principles</p>
+        <h2 class="serif mt-2 text-3xl font-semibold text-[#1a1816]">設計思想</h2>
+        <ol class="mt-8 space-y-7">
+          <li class="flex gap-5">
+            <span class="serif shrink-0 text-3xl font-semibold accent">I.</span>
+            <div>
+              <h3 class="serif text-xl font-semibold text-[#1a1816]">Code as Source of Truth</h3>
+              <p class="mt-1.5 text-[15px] leading-relaxed text-[#5a5247]">あらゆる定義をコードで表現し、レビュー・再現可能にします。</p>
+            </div>
+          </li>
+          <li class="flex gap-5">
+            <span class="serif shrink-0 text-3xl font-semibold accent">II.</span>
+            <div>
+              <h3 class="serif text-xl font-semibold text-[#1a1816]">Minimal Runtime</h3>
+              <p class="mt-1.5 text-[15px] leading-relaxed text-[#5a5247]">実行時依存を最小化し、長期に陳腐化しない構成を目指します。</p>
+            </div>
+          </li>
+          <li class="flex gap-5">
+            <span class="serif shrink-0 text-3xl font-semibold accent">III.</span>
+            <div>
+              <h3 class="serif text-xl font-semibold text-[#1a1816]">Composable</h3>
+              <p class="mt-1.5 text-[15px] leading-relaxed text-[#5a5247]">小さな単位で構成し、置換・追加を容易にします。</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <div class="rule"></div>
+
+      <!-- Architecture -->
+      <section id="architecture" class="py-12 sm:py-16">
+        <p class="mono text-[11px] uppercase tracking-[0.22em] accent">Architecture</p>
+        <h2 class="serif mt-2 text-3xl font-semibold text-[#1a1816]">構成</h2>
+        <p class="mt-4 text-[16px] leading-relaxed text-[#3d362f]">プロジェクトのレイアウトとルート設定の例です。</p>
+
+        <div class="mt-6">
+          <div class="mb-1.5 mono text-xs text-[#8c8377]">project layout</div>
+<pre><code class="language-plaintext">gcms/
+├─ schema/         # コンテンツのスキーマ定義
+├─ content/        # 実体データ (YAML / Markdown / JSON)
+├─ pipelines/      # ビルド・変換・検証
+├─ adapters/       # 出力先 (Web / API / Static)
+└─ gcms.config.ts  # ルート設定</code></pre>
+        </div>
+
+        <div class="mt-6">
+          <div class="mb-1.5 mono text-xs text-[#8c8377]">gcms.config.ts</div>
+<pre><code class="language-typescript">import { defineConfig } from "gcms";
+
+export default defineConfig({
+  schema: "./schema",
+  content: "./content",
+  output: {
+    web: { dir: "./dist", baseUrl: "/" },
+    api: { dir: "./dist/api" },
+  },
+  pipelines: ["validate", "transform", "emit"],
+});</code></pre>
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <!-- Workflow -->
+      <section id="workflow" class="py-12 sm:py-16">
+        <p class="mono text-[11px] uppercase tracking-[0.22em] accent">Workflow</p>
+        <h2 class="serif mt-2 text-3xl font-semibold text-[#1a1816]">ワークフロー</h2>
+        <p class="mt-4 text-[16px] leading-relaxed text-[#3d362f]">CLI を使った一般的な操作フローです。</p>
+<pre class="mt-6"><code class="language-bash"># 1. 初期化
+$ npx gcms init my-project
+
+# 2. スキーマ定義
+$ gcms schema add Article
+
+# 3. コンテンツ作成
+$ gcms content new Article hello-world
+
+# 4. ビルド & プレビュー
+$ gcms build && gcms serve</code></pre>
+      </section>
+
+      <div class="rule"></div>
+
+      <!-- Roadmap -->
+      <section id="roadmap" class="py-12 sm:py-16">
+        <p class="mono text-[11px] uppercase tracking-[0.22em] accent">Roadmap</p>
+        <h2 class="serif mt-2 text-3xl font-semibold text-[#1a1816]">ロードマップ</h2>
+        <ul class="mt-6 space-y-3">
+          <li class="flex items-start gap-4 rounded-lg border border-[#e7e2d6] bg-white p-5">
+            <span class="mono inline-flex shrink-0 items-center rounded-full accent-soft px-3 py-1 text-xs font-semibold accent">v0.1</span>
+            <span class="serif text-[16px] text-[#1a1816]">コンセプト整理・本ドキュメントの公開</span>
+          </li>
+          <li class="flex items-start gap-4 rounded-lg border border-[#e7e2d6] bg-white p-5">
+            <span class="mono inline-flex shrink-0 items-center rounded-full bg-[#f1ece0] px-3 py-1 text-xs font-semibold text-[#6b6258]">v0.2</span>
+            <span class="serif text-[16px] text-[#1a1816]">スキーマ定義 DSL のプロトタイプ</span>
+          </li>
+          <li class="flex items-start gap-4 rounded-lg border border-[#e7e2d6] bg-white p-5">
+            <span class="mono inline-flex shrink-0 items-center rounded-full bg-[#f1ece0] px-3 py-1 text-xs font-semibold text-[#6b6258]">v0.3</span>
+            <span class="serif text-[16px] text-[#1a1816]">CLI と最小ビルドパイプライン</span>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="border-t border-[#e7e2d6] bg-[#f4f0e6]">
+      <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-6 text-xs text-[#6b6258] sm:px-6">
+        <span>© <span class="y"></span> GCMS Concept</span>
+        <span class="mono">Anthropic-inspired</span>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll(".y").forEach((e) => (e.textContent = new Date().getFullYear()));
+      if (window.hljs) document.querySelectorAll("pre code").forEach((el) => window.hljs.highlightElement(el));
+    </script>
+  </body>
+</html>
