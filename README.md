@@ -13,7 +13,7 @@ GCMS のシステムコンセプトをまとめた静的サイトです。GitHub
 | Vercel-inspired | `themes/vercel.html` | vercel.com/docs | 純白とシャープな線・モノクロームミニマル |
 | Linear-inspired | `themes/linear.html` | linear.app | ダーク・グラデーション・洗練された余白 |
 | Anthropic-inspired | `themes/anthropic.html` | docs.anthropic.com | クリーム背景・セリフ見出し・読書体験重視 |
-| Vercel × Gift10    | `themes/gift10.html`    | vercel.com/docs + gift10.co.jp | Vercel のミニマル構造に朱色 (#db2e1f) のアクセントだけを乗せたハイブリッド |
+| Vercel × Gift10    | `themes/gift10.html`    | vercel.com/docs + gift10.co.jp | Vercel のミニマル構造に朱色 (#DB1717) のアクセントだけを乗せたハイブリッド |
 
 各テーマページの上部に「テーマ切替バー」があり、互いに行き来できます。
 気に入ったテーマが決まったら、その内容を `index.html` に昇格してください。
