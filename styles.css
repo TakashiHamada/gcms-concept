@@ -1,0 +1,47 @@
+/* GCMS concept page — custom overrides on top of Tailwind */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 4rem;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-feature-settings: "calt" 0, "liga" 0;
+}
+
+pre {
+  background: transparent !important;
+}
+
+pre code.hljs {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Subtle scrollbar inside code blocks */
+pre::-webkit-scrollbar {
+  height: 8px;
+}
+pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+}
+pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
