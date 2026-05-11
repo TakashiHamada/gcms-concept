@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="GCMS — 2026-05 時点の詳細仕様スナップショット" />
+    <title>GCMS — Snapshot 2026-05</title>
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='white'/%3E%3Cpolygon points='32,18 48,46 16,46' fill='%23DB1717'/%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/github.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.min.js"></script>
+
+    <style>
+      :root {
+        --accent: #DB1717;
+        --accent-hover: #B51313;
+        --accent-soft: #fce7e7;
+      }
+      html { scroll-behavior: smooth; scroll-padding-top: 5rem; -webkit-text-size-adjust: 100%; }
+      body { font-family: "Inter", system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; letter-spacing: -0.011em; }
+      .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .accent { color: var(--accent); }
+      .accent-bg { background: var(--accent); }
+      .accent-soft { background: var(--accent-soft); }
+      .ic { font-family: "JetBrains Mono", monospace; background: #fafafa; border: 1px solid #eaeaea; padding: 1px 5px; border-radius: 3px; font-size: 0.85em; color: #000; }
+      pre { background: transparent !important; }
+      pre code.hljs { background: #fafafa !important; padding: 1.25rem !important; border: 1px solid #eaeaea; border-radius: 6px; font-size: 13px; line-height: 1.65; }
+      h1, h2, h3 { letter-spacing: -0.025em; }
+      a.txt-accent:hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; text-decoration-thickness: 2px; }
+    </style>
+  </head>
+
+  <body class="bg-white text-black antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-40 border-b border-[#eaeaea] bg-white/85 backdrop-blur">
+      <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4 sm:px-6">
+        <a href="../index.html" class="flex items-center gap-2">
+          <svg viewBox="0 0 76 65" class="h-4 w-auto" aria-hidden="true"><path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="#DB1717"/></svg>
+          <span class="text-sm font-semibold tracking-tight">GCMS<span class="accent">.</span></span>
+          <span class="text-xs text-neutral-500">/ snapshot</span>
+        </a>
+        <nav class="hidden gap-5 text-sm text-neutral-600 sm:flex">
+          <a class="txt-accent hover:text-black" href="#components">コンポーネント</a>
+          <a class="txt-accent hover:text-black" href="#records">集約データ</a>
+          <a class="txt-accent hover:text-black" href="#auth">認証</a>
+          <a class="txt-accent hover:text-black" href="#design">設計上の核</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+      <!-- Back link -->
+      <a href="../index.html" class="inline-flex items-center gap-1 text-xs text-neutral-500 hover:text-[var(--accent)]">
+        ← Concept に戻る
+      </a>
+
+      <!-- Hero -->
+      <section class="mt-4 border-b border-[#eaeaea] pb-12">
+        <div class="mono text-xs uppercase tracking-widest accent">Snapshot · 2026-05</div>
+        <h1 class="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">
+          v0.1<span class="accent">.</span>
+        </h1>
+        <p class="mt-2 mono text-xs uppercase tracking-widest text-neutral-500">議事録 / 日報 / 有給 の 3 系統が稼働</p>
+        <p class="mt-5 max-w-2xl text-base leading-relaxed text-neutral-700">
+          このページは <strong class="font-semibold text-black">2026 年 5 月時点</strong> における GCMS の実装詳細を記録した、
+          時点固定のスナップショットです。仕様は以後のバージョンで変化する可能性があります。
+          コンセプト（時間に依存しない設計思想）は <a href="../index.html" class="accent txt-accent">トップページ</a> をご覧ください。
+        </p>
+
+        <nav aria-label="目次" class="mt-8">
+          <p class="mono text-[11px] uppercase tracking-[0.2em] text-neutral-500">Contents</p>
+          <ul class="mt-3 divide-y divide-[#eaeaea] border-y border-[#eaeaea]">
+            <li>
+              <a href="#components" class="group flex items-baseline justify-between gap-3 py-3.5 transition hover:text-[var(--accent)]">
+                <span class="flex items-baseline gap-4">
+                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">01</span>
+                  <span class="text-sm font-medium">主要コンポーネント</span>
+                </span>
+                <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li>
+              <a href="#records" class="group flex items-baseline justify-between gap-3 py-3.5 transition hover:text-[var(--accent)]">
+                <span class="flex items-baseline gap-4">
+                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">02</span>
+                  <span class="text-sm font-medium">集約データ仕様</span>
+                </span>
+                <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li>
+              <a href="#auth" class="group flex items-baseline justify-between gap-3 py-3.5 transition hover:text-[var(--accent)]">
+                <span class="flex items-baseline gap-4">
+                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">03</span>
+                  <span class="text-sm font-medium">認証と展開</span>
+                </span>
+                <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li>
+              <a href="#design" class="group flex items-baseline justify-between gap-3 py-3.5 transition hover:text-[var(--accent)]">
+                <span class="flex items-baseline gap-4">
+                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">04</span>
+                  <span class="text-sm font-medium">設計上の核</span>
+                </span>
+                <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+
+      <!-- Components -->
+      <section id="components" class="border-b border-[#eaeaea] py-12">
+        <h2 class="text-2xl font-bold tracking-tight">
+          <span class="mono mr-2 text-xs accent">01</span>主要コンポーネント
+        </h2>
+        <p class="mt-3 text-neutral-700">
+          実装は <strong class="font-semibold text-black">2 つの GAS パッケージ</strong> と
+          <strong class="font-semibold text-black">2 つの Python ツール</strong> から成ります。
+        </p>
+
+        <div class="mt-6 overflow-hidden rounded-lg border border-[#eaeaea]">
+          <table class="w-full text-sm">
+            <thead class="bg-[#fafafa] text-left mono text-[11px] uppercase tracking-wider text-neutral-500">
+              <tr>
+                <th class="px-4 py-2.5 font-medium">Name</th>
+                <th class="px-4 py-2.5 font-medium">Runtime</th>
+                <th class="px-4 py-2.5 font-medium">Schedule</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#eaeaea]">
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] accent">api-input</td>
+                <td class="px-4 py-3 text-neutral-600">GAS Web App</td>
+                <td class="px-4 py-3 text-neutral-600">on-demand (HTTP POST)</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] accent">leave-tracker</td>
+                <td class="px-4 py-3 text-neutral-600">GAS</td>
+                <td class="px-4 py-3 text-neutral-600">10 分 cron</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] accent">daily-report</td>
+                <td class="px-4 py-3 text-neutral-600">Python (local)</td>
+                <td class="px-4 py-3 text-neutral-600">毎朝 06:00 JST</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 mono text-[12px] accent">ingest-meetings</td>
+                <td class="px-4 py-3 text-neutral-600">Python (local)</td>
+                <td class="px-4 py-3 text-neutral-600">30 分 cron</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- api-input -->
+        <article class="mt-8 rounded-lg border border-[#eaeaea] p-5">
+          <header class="flex items-baseline justify-between gap-3">
+            <h3 class="text-base font-semibold mono accent">api-input</h3>
+            <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">GAS Web App</span>
+          </header>
+          <p class="mt-3 text-sm leading-relaxed text-neutral-700">
+            全書き込みを受け持つ <strong class="font-semibold text-black">単一の窓口</strong>。
+            HTTP POST の body にある <span class="ic">apiKey</span> で認証し
+            （GAS の <span class="ic">doPost</span> が HTTP ヘッダを読めない仕様の回避）、
+            <span class="ic">OWNER_EMAIL</span> impersonate で会社カレンダーへ upsert します。
+          </p>
+          <ul class="mt-3 space-y-1.5 text-sm text-neutral-700">
+            <li class="flex gap-2"><span class="accent">·</span> zod によるスキーマ検証</li>
+            <li class="flex gap-2"><span class="accent">·</span> <span class="ic">extendedProperties.private</span> の 1024 文字 fail-fast</li>
+            <li class="flex gap-2"><span class="accent">·</span> 冪等性判定（create / update / noop）</li>
+          </ul>
+        </article>
+
+        <!-- leave-tracker -->
+        <article class="mt-4 rounded-lg border border-[#eaeaea] p-5">
+          <header class="flex items-baseline justify-between gap-3">
+            <h3 class="text-base font-semibold mono accent">leave-tracker</h3>
+            <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">GAS · 10 min</span>
+          </header>
+          <p class="mt-3 text-sm leading-relaxed text-neutral-700">
+            10 分おきに各社員の primary に手入力された
+            <span class="ic">「有給」</span><span class="ic">「有休」</span> イベントのタイトルと extProps を
+            <span class="ic">events.patch</span> で更新します。
+            年度起算月を <span class="ic">gcms.leave.periodStart</span> で検出し、
+            累計 (N) を毎回ゼロから振り直します。
+          </p>
+        </article>
+
+        <!-- daily-report -->
+        <article class="mt-4 rounded-lg border border-[#eaeaea] p-5">
+          <header class="flex items-baseline justify-between gap-3">
+            <h3 class="text-base font-semibold mono accent">daily-report</h3>
+            <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">Python · 06:00 JST</span>
+          </header>
+          <p class="mt-3 text-sm leading-relaxed text-neutral-700">
+            社員ごとに前日の完了 Google Tasks + primary calendar + 会社カレンダーを読み出し、
+            ローカル <span class="ic">ollama</span> で 1 セクションずつ日報を生成して、
+            会社カレンダーに 1 日 1 イベント（<span class="ic">[日報] YYYY-MM-DD</span>、終日）に集約します。
+          </p>
+          <p class="mt-3 text-sm leading-relaxed text-neutral-700">
+            description は冒頭の <span class="ic">## 会社全体</span> セクション +
+            各社員 <span class="ic">## 表示名</span> セクションの並列構成で、
+            お休みの社員は LLM をスキップして <span class="ic">- お休み (n)</span> を決定論的に出力します。
+          </p>
+        </article>
+
+        <!-- ingest-meetings -->
+        <article class="mt-4 rounded-lg border border-[#eaeaea] p-5">
+          <header class="flex items-baseline justify-between gap-3">
+            <h3 class="text-base font-semibold mono accent">ingest-meetings</h3>
+            <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">Python · 30 min</span>
+          </header>
+          <p class="mt-3 text-sm leading-relaxed text-neutral-700">
+            30 分おきに Drive フォルダを polling し、Gemini Meet 議事録 Doc を ollama で圧縮、
+            会社カレンダーに 1 議事録 = 1 イベントを upsert します。
+          </p>
+          <p class="mt-3 text-sm leading-relaxed text-neutral-700">
+            description は <span class="ic">＜概要＞</span>（140 字以内）+
+            <span class="ic">＜次のステップ＞</span>（担当者別）+
+            <span class="ic">＜詳細＞</span>（タイムスタンプ削除済み）の 3 ブロック構造。
+          </p>
+
+          <h4 class="mt-4 text-xs font-semibold uppercase tracking-wider text-neutral-500">8000 字超過時の 3 段階フォールバック</h4>
+          <ol class="mt-2 space-y-1.5 text-sm text-neutral-700">
+            <li class="flex gap-3"><span class="mono w-4 shrink-0 accent">1</span><span>LLM による圧縮</span></li>
+            <li class="flex gap-3"><span class="mono w-4 shrink-0 accent">2</span><span>再圧縮</span></li>
+            <li class="flex gap-3"><span class="mono w-4 shrink-0 accent">3</span><span>＜詳細＞ 末尾の切り詰め</span></li>
+          </ol>
+
+          <p class="mt-4 text-sm leading-relaxed text-neutral-700">
+            LLM プロンプトは <strong class="font-semibold text-black">体言止め・常体・新事実生成禁止</strong> を強制し、
+            gemma 系特有の末尾 postscript（<span class="ic">---</span> + <span class="ic">**【まとめ…】**</span> +
+            <span class="ic">（※…）</span>）はサニタイザで除去します。
+          </p>
+        </article>
+      </section>
+
+      <!-- Records -->
+      <section id="records" class="border-b border-[#eaeaea] py-12">
+        <h2 class="text-2xl font-bold tracking-tight">
+          <span class="mono mr-2 text-xs accent">02</span>集約データ仕様
+        </h2>
+        <p class="mt-3 text-neutral-700">
+          現在、3 系統のデータが Stage 1 のパイプライン経由で会社カレンダーに集約されています。
+        </p>
+
+        <ul class="mt-6 space-y-4">
+          <li class="rounded-lg border border-[#eaeaea] p-5">
+            <div class="flex items-baseline justify-between gap-3">
+              <h3 class="font-semibold">議事録</h3>
+              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">ingest-meetings</span>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
+              Gemini Meet で生成された議事録 Doc を Drive から取り込み、
+              <span class="ic">＜概要＞ / ＜次のステップ＞ / ＜詳細＞</span> の 3 ブロックに整形して
+              1 議事録 = 1 イベントに集約。プライベートな雑談や個人情報は LLM 段階でフィルタされます。
+            </p>
+          </li>
+          <li class="rounded-lg border border-[#eaeaea] p-5">
+            <div class="flex items-baseline justify-between gap-3">
+              <h3 class="font-semibold">日報</h3>
+              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">daily-report</span>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
+              前日の Google Tasks 完了分と各社員のカレンダーから、ローカル LLM が 1 セクションずつ生成。
+              <span class="ic">[日報] YYYY-MM-DD</span> という終日イベント 1 つに、会社全体と社員別の見出しで並べて集約。
+              休んでいる社員は LLM をスキップし、<span class="ic">- お休み (n)</span> と決定論的に記録します。
+            </p>
+          </li>
+          <li class="rounded-lg border border-[#eaeaea] p-5">
+            <div class="flex items-baseline justify-between gap-3">
+              <h3 class="font-semibold">有給休暇</h3>
+              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">leave-tracker</span>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
+              各社員が自分のカレンダーに書いた「有給」「有休」イベントを 10 分おきに集計し、
+              年度起算月から累計 (N) を毎回ゼロから振り直します。残数管理の単一情報源として機能します。
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Auth & deployment -->
+      <section id="auth" class="border-b border-[#eaeaea] py-12">
+        <h2 class="text-2xl font-bold tracking-tight">
+          <span class="mono mr-2 text-xs accent">03</span>認証と展開
+        </h2>
+        <p class="mt-3 text-neutral-700">
+          <strong class="font-semibold text-black">Service Account + Domain-Wide Delegation</strong> 方式で、
+          Workspace 2 ドメインを 1 回の登録でカバーしています。
+        </p>
+
+        <dl class="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-[#eaeaea] bg-[#eaeaea] sm:grid-cols-2">
+          <div class="bg-white p-5">
+            <dt class="mono text-[11px] uppercase tracking-wider accent">Domain 1</dt>
+            <dd class="mt-2 text-sm font-medium">gift10.net</dd>
+          </div>
+          <div class="bg-white p-5">
+            <dt class="mono text-[11px] uppercase tracking-wider accent">Domain 2</dt>
+            <dd class="mt-2 text-sm font-medium">gift10.co.jp</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- Design core -->
+      <section id="design" class="py-12">
+        <h2 class="text-2xl font-bold tracking-tight">
+          <span class="mono mr-2 text-xs accent">04</span>設計上の核
+        </h2>
+        <p class="mt-3 text-neutral-700">
+          Python ツールは Calendar API を直接叩かず、
+          必ず <span class="ic">api-input</span> 経由で書き込みます。
+          これにより、<strong class="font-semibold text-black">冪等性・スキーマ検証・サイズ制限が TypeScript 側 1 箇所に集約</strong> され、
+          二重実装を回避しています。
+        </p>
+
+        <div class="mt-6 rounded-lg border border-[#eaeaea] p-5">
+          <h3 class="mono text-[11px] uppercase tracking-wider accent">Single write surface</h3>
+          <pre class="mt-3"><code class="language-plaintext">Python tools  ─┐
+GAS jobs      ─┼─→ api-input (zod / size / idempotency) ─→ Google Calendar
+manual edits  ─┘</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-[#eaeaea]">
+      <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-6 text-xs text-neutral-500 sm:px-6">
+        <span>© <span class="y"></span> <span class="font-medium text-black">GIFT TEN INDUSTRY<span class="accent">.</span>K<span class="accent">.</span>K</span></span>
+        <span class="mono uppercase tracking-widest">GCMS · Snapshot 2026-05</span>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll(".y").forEach((e) => (e.textContent = new Date().getFullYear()));
+      if (window.hljs) document.querySelectorAll("pre code").forEach((el) => window.hljs.highlightElement(el));
+    </script>
+  </body>
+</html>

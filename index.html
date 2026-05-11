@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#ffffff" />
-    <meta name="description" content="GCMS — Google Calendar Management System のコンセプト" />
-    <title>GCMS — Google Calendar Management System</title>
+    <meta name="description" content="GCMS — General Calendar Management System のコンセプト" />
+    <title>GCMS — General Calendar Management System</title>
 
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='white'/%3E%3Cpolygon points='32,18 48,46 16,46' fill='%23DB1717'/%3E%3C/svg%3E" />
 
@@ -50,8 +50,8 @@
           <a class="txt-accent hover:text-black" href="#overview">概要</a>
           <a class="txt-accent hover:text-black" href="#concept">設計コンセプト</a>
           <a class="txt-accent hover:text-black" href="#architecture">構成</a>
-          <a class="txt-accent hover:text-black" href="#records">記録対象</a>
           <a class="txt-accent hover:text-black" href="#use-cases">活用</a>
+          <a class="txt-accent hover:text-black" href="#snapshots">詳細仕様</a>
         </nav>
       </div>
     </header>
@@ -63,7 +63,7 @@
         <h1 class="mt-3 text-4xl font-extrabold tracking-tight sm:text-6xl">
           GCMS<span class="accent">.</span>
         </h1>
-        <p class="mt-2 mono text-xs uppercase tracking-widest text-neutral-500">Google Calendar Management System</p>
+        <p class="mt-2 mono text-xs uppercase tracking-widest text-neutral-500">General Calendar Management System</p>
         <p class="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-700">
           できるだけ多くの業務情報を Google カレンダーに記録し、
           そこを唯一の<strong class="font-semibold text-black">データ基盤</strong>として運用する社内システム。
@@ -92,18 +92,9 @@
               </a>
             </li>
             <li>
-              <a href="#records" class="group flex items-baseline justify-between gap-3 py-3.5 transition hover:text-[var(--accent)]">
-                <span class="flex items-baseline gap-4">
-                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">04</span>
-                  <span class="text-sm font-medium">いま記録されているもの</span>
-                </span>
-                <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
-              </a>
-            </li>
-            <li>
               <a href="#use-cases" class="group flex items-baseline justify-between gap-3 py-3.5 transition hover:text-[var(--accent)]">
                 <span class="flex items-baseline gap-4">
-                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">05</span>
+                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">04</span>
                   <span class="text-sm font-medium">想定される活用</span>
                 </span>
                 <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
@@ -112,8 +103,17 @@
             <li>
               <a href="#roadmap" class="group flex items-baseline justify-between gap-3 py-3.5 transition hover:text-[var(--accent)]">
                 <span class="flex items-baseline gap-4">
-                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">06</span>
+                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">05</span>
                   <span class="text-sm font-medium">ロードマップ</span>
+                </span>
+                <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li>
+              <a href="#snapshots" class="group flex items-baseline justify-between gap-3 py-3.5 transition hover:text-[var(--accent)]">
+                <span class="flex items-baseline gap-4">
+                  <span class="mono w-7 shrink-0 text-xs font-semibold accent">06</span>
+                  <span class="text-sm font-medium">詳細仕様（スナップショット）</span>
                 </span>
                 <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
               </a>
@@ -395,97 +395,12 @@
             </g>
           </svg>
         </div>
-
-        <h3 class="mt-10 text-base font-semibold tracking-tight">主要コンポーネント</h3>
-        <div class="mt-3 overflow-hidden rounded-lg border border-[#eaeaea]">
-          <table class="w-full text-sm">
-            <thead class="bg-[#fafafa] text-left mono text-[11px] uppercase tracking-wider text-neutral-500">
-              <tr>
-                <th class="px-4 py-2.5 font-medium">Name</th>
-                <th class="px-4 py-2.5 font-medium">Stage</th>
-                <th class="px-4 py-2.5 font-medium">Role</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-[#eaeaea]">
-              <tr>
-                <td class="px-4 py-3 mono text-[12px] accent">api-input</td>
-                <td class="px-4 py-3 text-neutral-600">Stage 1</td>
-                <td class="px-4 py-3">単一の書き込み窓口（GAS）。スキーマ検証・サイズ制限・冪等性を集約。</td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3 mono text-[12px] accent">leave-tracker</td>
-                <td class="px-4 py-3 text-neutral-600">Stage 1</td>
-                <td class="px-4 py-3">10 分 cron。各社員 primary の有給/有休を会社カレンダーに集計。</td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3 mono text-[12px] accent">daily-report</td>
-                <td class="px-4 py-3 text-neutral-600">Stage 1</td>
-                <td class="px-4 py-3">毎朝 06:00 JST。タスクとカレンダーから前日分の日報を生成。</td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3 mono text-[12px] accent">ingest-meetings</td>
-                <td class="px-4 py-3 text-neutral-600">Stage 1</td>
-                <td class="px-4 py-3">30 分 cron。Drive 上の Meet 議事録 Doc を取り込み・圧縮。</td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3 mono text-[12px] text-neutral-500">(将来のツール群)</td>
-                <td class="px-4 py-3 text-neutral-600">Stage 2</td>
-                <td class="px-4 py-3 text-neutral-600">基盤を読んで成果物を生成する各種 Python / AI ツール。</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Records -->
-      <section id="records" class="border-b border-[#eaeaea] py-12">
-        <h2 class="text-2xl font-bold tracking-tight">
-          <span class="mono mr-2 text-xs accent">04</span>いま記録されているもの
-        </h2>
-        <p class="mt-3 text-neutral-700">
-          現在、3 系統のデータが Stage 1 のパイプライン経由で会社カレンダーに集約されています。
-        </p>
-
-        <ul class="mt-6 space-y-4">
-          <li class="rounded-lg border border-[#eaeaea] p-5">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-semibold">議事録</h3>
-              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">ingest-meetings · 30 min</span>
-            </div>
-            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
-              Gemini Meet で生成された議事録 Doc を Drive から取り込み、
-              <span class="ic">＜概要＞ / ＜次のステップ＞ / ＜詳細＞</span> の 3 ブロックに整形して 1 議事録 = 1 イベントに集約。
-              プライベートな雑談や個人情報は LLM 段階でフィルタされます。
-            </p>
-          </li>
-          <li class="rounded-lg border border-[#eaeaea] p-5">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-semibold">日報</h3>
-              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">daily-report · 06:00 JST</span>
-            </div>
-            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
-              前日の Google Tasks 完了分と各社員のカレンダーから、ローカル LLM が 1 セクションずつ生成。
-              <span class="ic">[日報] YYYY-MM-DD</span> という終日イベント 1 つに、会社全体と社員別の見出しで並べて集約。
-              休んでいる社員は LLM をスキップし、<span class="ic">- お休み (n)</span> と決定論的に記録します。
-            </p>
-          </li>
-          <li class="rounded-lg border border-[#eaeaea] p-5">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-semibold">有給休暇</h3>
-              <span class="mono text-[11px] uppercase tracking-wider text-neutral-500">leave-tracker · 10 min</span>
-            </div>
-            <p class="mt-2 text-sm leading-relaxed text-neutral-600">
-              各社員が自分のカレンダーに書いた「有給」「有休」イベントを 10 分おきに集計し、
-              年度起算月から累計 (N) を毎回ゼロから振り直します。残数管理の単一情報源として機能します。
-            </p>
-          </li>
-        </ul>
       </section>
 
       <!-- Use cases -->
       <section id="use-cases" class="border-b border-[#eaeaea] py-12">
         <h2 class="text-2xl font-bold tracking-tight">
-          <span class="mono mr-2 text-xs accent">05</span>想定される活用
+          <span class="mono mr-2 text-xs accent">04</span>想定される活用
         </h2>
         <p class="mt-3 text-neutral-700">
           活用ツール（Stage 2）は必要になったときに仕様化していく方針です。
@@ -513,9 +428,9 @@
       </section>
 
       <!-- Roadmap -->
-      <section id="roadmap" class="py-12">
+      <section id="roadmap" class="border-b border-[#eaeaea] py-12">
         <h2 class="text-2xl font-bold tracking-tight">
-          <span class="mono mr-2 text-xs accent">06</span>ロードマップ
+          <span class="mono mr-2 text-xs accent">05</span>ロードマップ
         </h2>
         <ul class="mt-6 divide-y divide-[#eaeaea] border-y border-[#eaeaea]">
           <li class="flex items-baseline gap-4 py-4">
@@ -533,6 +448,31 @@
           <li class="flex items-baseline gap-4 py-4">
             <span class="mono inline-flex w-12 shrink-0 items-center justify-center border border-[#eaeaea] px-1.5 py-0.5 text-[11px] font-semibold text-neutral-500">v0.4+</span>
             <span class="text-sm">Stage 2 ツール群の整備（補助金日報・決算書 など、必要に応じて随時）</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Snapshots -->
+      <section id="snapshots" class="py-12">
+        <h2 class="text-2xl font-bold tracking-tight">
+          <span class="mono mr-2 text-xs accent">06</span>詳細仕様（スナップショット）
+        </h2>
+        <p class="mt-3 text-neutral-700">
+          実装の細部は時期によって変化します。各時点での詳細仕様は、以下のスナップショットページにまとめています。
+        </p>
+
+        <ul class="mt-6 divide-y divide-[#eaeaea] border-y border-[#eaeaea]">
+          <li>
+            <a href="./snapshots/2026-05.html" class="group flex items-baseline justify-between gap-3 py-4 transition hover:text-[var(--accent)]">
+              <span class="flex items-baseline gap-4">
+                <span class="mono inline-flex shrink-0 items-center accent-bg px-2 py-0.5 text-[11px] font-semibold text-white">2026-05</span>
+                <span>
+                  <span class="block text-sm font-semibold">v0.1 — 議事録・日報・有給の 3 系統が稼働</span>
+                  <span class="mt-0.5 block text-xs text-neutral-500">主要コンポーネント / 集約データ仕様 / 認証と展開</span>
+                </span>
+              </span>
+              <span class="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true">→</span>
+            </a>
           </li>
         </ul>
       </section>
